@@ -3,9 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>VueJs Practice</title>
 </head>
 <body>
-    
+    <div id="app">
+        <h1>{{ title }}</h1>
+        <p v-if="characters.length === 0">No Characters Found</p>
+        <ul v-else-if="characters.length % 2 !== 0">
+            <li v-for="character in characters">{{ character.name }}</li>
+        </ul>
+        <p v-else>Movie has odd characters</p>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            data(){
+                return {
+                    title:'My Movie List',
+                    characters: [
+                        {name: 'JIM'},
+                        {name: 'Katara'},
+                        {name: 'Dexsee'},
+                        {name: 'Rizer'},
+                        {name: 'Estaban'},
+                    ]
+                }
+            }
+        }).mount('#app');
+    </script>
 </body>
 </html>
