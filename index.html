@@ -4,8 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <style>
+        body{
+            background-color: black;
+            color: white;
+        }
+    </style>
 </head>
 <body>
-    
+    <h1>Excercise Time</h1>
+    <div id="app">
+        <h1>Add New Character</h1>
+        <label for="name">Name</label>
+        <pre>
+            {{ newCharacter }}
+        </pre>
+        <input type="text" v-model="newCharacter.name" @keyup.enter="AddNewCharacter">
+        <h1>Motivational Character In This World Right Now</h1>
+        <ul>
+            <li v-for="character in characterList" style="display: flex; gap:10px; width: 400px;justify-content: space-between;margin-bottom: 15px;">
+                <span>{{ character.name }}</span> 
+                <button v-on:click="AddCharacterToFavouriteList(character)">Add To Favourite</button>
+            </li>
+        </ul>
+        <h1>My Favourite Characters</h1>
+        <h2 v-if="favouriteCharacterList.length === 0">No Favourite Character</h2>
+        <ol v-else>
+            <li v-for="character in favouriteCharacterList">{{ character.name }}</li>
+        </ol>
+    </div>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+        Vue.createApp({
+            data:() => ({
+                newCharacter:{
+                    name: ''
+                },
+                characterList:[
+                {name:'Ben Hong'},
+                {name:'Bill Gates'},
+                {name:'Elon Musk'},
+                {name:'Mark Zuckerburg'},
+                {name:'Taylor Otwell'},
+                {name:'Jeff Bazeoz'}
+            ],
+            favouriteCharacterList:[] 
+            }),
+            methods:{
+                AddCharacterToFavouriteList(character){
+                    this.favouriteCharacterList.push(character)
+                },
+                AddNewCharacter(){
+                    this.characterList.push(this.newCharacter);
+                    this.newCharacter = {name:''};
+                }
+            }
+        }).mount('#app');
+    </script>
 </body>
 </html>

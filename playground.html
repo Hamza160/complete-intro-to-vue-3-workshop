@@ -5,9 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+<style>
+    body{
+        background-color: black;
+        color: white;
+    }
+</style>
 <body>
     <h1>Hello Frontend Masters!</h1>
     <div id="app">
+        <h1>Counter</h1>
+        <p>{{ count }}</p>
+        <button v-on:click="incrementCount(10, $event)">Increament Count</button>
+        <h1>{{ incrementAmount }}</h1>
+        <div>
+            <label for="incrementAmount">Increament by: </label>
+            <!-- <input 
+                type="number" 
+                v-bind:value="incrementAmount"
+                v-on:input="changeIncrementAmount"
+            /> -->
+            <input 
+                type="number" 
+                v-model="incrementAmount"
+            />
+        </div>
+        <hr>
         <p v-if="message.length % 2 === 0">Even: {{ message.toUpperCase() }}</p>
         <p v-else>Odd: {{ message }}</p>
         <!-- <ul>
@@ -32,8 +55,19 @@
         const app = createApp({
             data(){
                 return {
+                    count:10,
+                    incrementAmount:1,
                     message:'It works',
                     listOfNumbers: [{name: 1, list:[1,2,3,4,5], id:"1ce79551-b190-4fc4-89ef-28315b2b5aa4"}, {name: 2, list:[1,2,3,4,5], id:"9cf7a778-da2c-4e37-8c17-faf31cc75c32"}, {name: 3, list:[1,2,3,4,5], id:"7a7a546c-352e-4f7b-be5c-894076dab3f2"}, {name: 4, list:[1,2,3,4,5], id:"55d57dd6-5ccc-49ba-86ff-64f6cf3ad96e"}, {name: 5, list:[1,2,3,4,5], id:"9d58e213-c262-4033-a5cc-59a6924e9359"}]
+                }
+            },
+            methods:{
+                incrementCount(newAmount, event){
+                    console.log(newAmount, event)
+                    this.count += this.incrementAmount;
+                },
+                changeIncrementAmount(e){
+                    this.incrementAmount = Number(e.target.value); 
                 }
             }
         });
