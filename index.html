@@ -14,6 +14,10 @@
 <body>
     <h1>Excercise Time</h1>
     <div id="app">
+        <h2>Statistics</h2>
+        <ul>
+            <li v-for="(stat, type) in banderStatistics">{{ type }}: {{stat}}</li>
+        </ul>
         <h1>Add New Character</h1>
         <label for="name">Name</label>
         <pre>
@@ -38,28 +42,47 @@
         Vue.createApp({
             data:() => ({
                 newCharacter:{
-                    name: ''
+                    name: '',
+                    element: []
                 },
                 characterList:[
-                {name:'Ben Hong'},
-                {name:'Bill Gates'},
-                {name:'Elon Musk'},
-                {name:'Mark Zuckerburg'},
-                {name:'Taylor Otwell'},
-                {name:'Jeff Bazeoz'}
-            ],
-            favouriteCharacterList:[] 
+                    {name:'Aang', element:['Air', 'Earth', 'Water', 'Fire']},
+                    {name:'Zuko', element:['Fire']},
+                    {name:'Toph', element:['Water']},
+                    {name:'Katara', element:['Water']}
+                ],
+                favouriteCharacterList:[] 
             }),
-            methods:{
-                AddCharacterToFavouriteList(character){
-                    this.favouriteCharacterList.push(character)
-                },
-                AddNewCharacter(){
-                    this.characterList.push(this.newCharacter);
-                    this.newCharacter = {name:''};
+            computed:{
+                banderStatistics(){
+                    const elements = ['Air', 'Earth', 'Water', 'Fire'];
+                    const statistics = {
+                        Air:0,
+                        Earth:0,
+                        Water:0,
+                        Fire:0
+                    }
+                    this.characterList.forEach(character => {
+                        elements.forEach(element => {
+                            if(character.element.indexOf(element) > -1){
+                                statistics[element] += 1;
+                            }
+                        })
+                    })
+
+                    return statistics;
                 }
-            }
-        }).mount('#app');
+            },
+            methods:{
+                    AddCharacterToFavouriteList(character){
+                        this.favouriteCharacterList.push(character)
+                    },
+                    AddNewCharacter(){
+                        this.characterList.push(this.newCharacter);
+                        this.newCharacter = {name:'', element: []};
+                    }
+                }
+            }).mount('#app');
     </script>
 </body>
 </html>
